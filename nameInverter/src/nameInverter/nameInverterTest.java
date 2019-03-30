@@ -58,6 +58,11 @@ public class nameInverterTest {
 		assertInverted("Doe, John BS. Phd.", "John Doe BS. Phd.");
 	}
 	
+	@Test
+	public void integration() {
+		assertInverted("Doe, John I Sr. Phd.", "  Dr.  John  Doe  I Sr. Phd.");
+	}
+	
 
 	private String invertName(String name) {
 		// TODO Auto-generated method stub
@@ -70,12 +75,24 @@ public class nameInverterTest {
 			if(names.length == 1) {
 				return names[0];
 			}
+			
+			else if(isHonorific(names) && names.length>3) {
+				String postNominals = "";
+				
+				postNominals = getPostNominals(names, postNominals, isHonorific(names));
+				return names[2]+", "+names[1]+" "+postNominals.trim();
+			}
+				
 			else if(isHonorific(names)) {
 				return names[2]+", "+names[1];
 			}
 			else if(isPostNominal(names)) {
-				return names[1]+", "+names[0]+" "+names[2];
+				String postNominals = "";
+				
+				postNominals = getPostNominals(names, postNominals, isHonorific(names));
+				return names[1]+", "+names[0]+" "+postNominals.trim();
 			}
+			
 			else {
 				return names[1]+", "+names[0];
 			}
@@ -86,12 +103,32 @@ public class nameInverterTest {
 		
 	}
 
+	private String getPostNominals(String[] names, String postNominals, boolean honorific) {
+		if(honorific) {
+			for(int i = 3; i<names.length; i++) {
+				postNominals+=names[i]+" ";
+			}
+		}
+		else {
+			
+			for(int i = 2; i<names.length; i++) {
+				postNominals+=names[i]+" ";
+				
+			}
+			
+		}
+		
+		return postNominals;
+	}
+
 	private boolean isPostNominal(String[] names) {
-		return names.length == 3 && names[2].equals("II");
+		return names.length > 2;
+		
 	}
 
 	private boolean isHonorific(String[] names) {
-		return names[0].equals("Mr.") || names[0].equals("Mrs.") || names[0].equals("Ms.") || names[0].equals("Dr.");
+		return names[0].equals("Mr.") || names[0].equals("Mrs.") || 
+				names[0].equals("Ms.") || names[0].equals("Dr.");
 	}
 
 	private String[] splitNames(String name) {
