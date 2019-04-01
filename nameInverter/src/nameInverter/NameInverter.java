@@ -18,25 +18,13 @@ public class NameInverter {
 				return names.get(0);
 			}
 			
-			else if(isHonorific(names) && names.size()>3) {
-				String postNominals = "";
-				
-				postNominals = getPostNominals(names, postNominals, isHonorific(names));
-				return names.get(2)+", "+names.get(1)+" "+postNominals.trim();
-			}
-				
-			else if(isHonorific(names)) {
-				return names.get(2)+", "+names.get(1);
-			}
-			else if(isPostNominal(names)) {
-				String postNominals = "";
-				
-				postNominals = getPostNominals(names, postNominals, isHonorific(names));
-				return names.get(1)+", "+names.get(0)+" "+postNominals.trim();
-			}
-			
 			else {
-				return names.get(1)+", "+names.get(0);
+				String postNominals = "";
+				
+				names = removeHonorific(names);
+				
+				postNominals = getPostNominals(names, postNominals);
+				return names.get(1)+", "+names.get(0)+postNominals;
 			}
 			
 			
@@ -45,19 +33,19 @@ public class NameInverter {
 		
 	}
 
-	public String getPostNominals(ArrayList<String> names, String postNominals, boolean honorific) {
-		if(honorific) {
-			for(int i = 3; i<names.size(); i++) {
-				postNominals+=names.get(i)+" ";
-			}
+	private ArrayList<String> removeHonorific(ArrayList<String> names) {
+		if(isHonorific(names)) {
+			names.remove(0);
+			return names;
 		}
-		else {
-			
-			for(int i = 2; i<names.size(); i++) {
-				postNominals+=names.get(i)+" ";
+		return names;
+	}
+
+	public String getPostNominals(ArrayList<String> names, String postNominals) {
+		
+		for(int i = 2; i<names.size(); i++) {
+			postNominals+=" "+names.get(i);
 				
-			}
-			
 		}
 		
 		return postNominals;
