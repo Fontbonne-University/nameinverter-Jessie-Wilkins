@@ -64,7 +64,7 @@ public class nameInverterTest {
 	}
 	
 
-	private String invertName(String name) {
+	public String invertName(String name) {
 		// TODO Auto-generated method stub
 		if(name == null || name.length()<=0) {
 			return "";
@@ -103,7 +103,7 @@ public class nameInverterTest {
 		
 	}
 
-	private String getPostNominals(String[] names, String postNominals, boolean honorific) {
+	public String getPostNominals(String[] names, String postNominals, boolean honorific) {
 		if(honorific) {
 			for(int i = 3; i<names.length; i++) {
 				postNominals+=names[i]+" ";
@@ -121,17 +121,17 @@ public class nameInverterTest {
 		return postNominals;
 	}
 
-	private boolean isPostNominal(String[] names) {
+	public boolean isPostNominal(String[] names) {
 		return names.length > 2;
 		
 	}
 
-	private boolean isHonorific(String[] names) {
+	public boolean isHonorific(String[] names) {
 		return names[0].equals("Mr.") || names[0].equals("Mrs.") || 
 				names[0].equals("Ms.") || names[0].equals("Dr.");
 	}
 
-	private String[] splitNames(String name) {
+	public String[] splitNames(String name) {
 		String names[] = name.trim().split("\\s+");
 		return names;
 	}
