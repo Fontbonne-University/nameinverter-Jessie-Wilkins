@@ -11,9 +11,7 @@ public class nameInverterTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		
 		nameMethods = new NameInverter();
-		
 	}
 
 	private void assertInverted(String invertedName, String originalName) {
@@ -21,13 +19,9 @@ public class nameInverterTest {
 	}
 	
 	public void givenNull_returnsEmptyString() {
-		String invertedName = "";
-		String originalName = null;
-		assertInverted(invertedName, originalName);
+		assertInverted("", null);
 	}
 
-	
-	
 	@Test public void givenEmptyString_returnEmptyString() {
 		assertInverted("", "");
 	}
